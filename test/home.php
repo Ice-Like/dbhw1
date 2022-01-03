@@ -44,7 +44,9 @@ function content(){
     }
     echo '
     </div>
-    <img src="https://www.wegoedu.com.tw/wp-content/uploads/2017/11/%E6%AB%BB%E8%8A%B1%E8%83%8C%E6%99%AF%E5%9C%96.jpg" width=100%>
+    <div style="padding-top: 12%;padding-left: 12%;">
+      <img src="https://uc.udn.com.tw/photo/2021/02/23/1/11751258.gif">
+    </div>
     ';
 }
 
