@@ -59,7 +59,6 @@
         $sql = "INSERT INTO `user`( `email`, `password`, `username`, `role`, `created`, `gender`) VALUES ('$email','$password','$username','$role','$now','$gender')";
         
         execute_sql($sql);
-        echo $sql;
         switchto("index.php");
       }
 
