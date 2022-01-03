@@ -43,7 +43,9 @@ function content(){
         $c = $c + 1;
     }
     echo '
-    </div>';
+    </div>
+    <img src="https://www.wegoedu.com.tw/wp-content/uploads/2017/11/%E6%AB%BB%E8%8A%B1%E8%83%8C%E6%99%AF%E5%9C%96.jpg" width=100%>
+    ';
 }
 
 footer();
