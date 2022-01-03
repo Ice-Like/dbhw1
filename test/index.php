@@ -96,10 +96,10 @@
 
     <div class="checkbox mb-3">
       <label>
-      
+        <a href='signup.php'>註冊</a>
       </label>
     </div>
-    <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+    <button class="w-100 btn btn-lg btn-primary" type="submit">登入</button>
     <p class="mt-5 mb-3 text-muted">&copy; 僅供測試用</p>
   </form>
 </main>
