@@ -1,9 +1,9 @@
 <?php
 
-$host="localhost";
-$user="root";
-$passwd="";
-$dbname="mmisdb";
+$host="us-cdbr-east-05.cleardb.net";
+$user="b447b6be6d7215";
+$passwd="3427bf27";
+$dbname="heroku_4e04d0ad1fcd13d";
 
 
 $connect = mysqli_connect ( $host , $user ,$passwd , $dbname );
