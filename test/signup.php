@@ -71,7 +71,7 @@
 <div class="container">
   <main>
     <div class="py-5 text-center">
-      <img class="d-block mx-auto mb-4" src="./assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">
+      <img class="d-block mx-auto mb-4" src="https://img.icons8.com/ios/500/inscription.png" alt="" width="72" height="57">
       <h2>註冊帳號</h2>
     </div>
 
