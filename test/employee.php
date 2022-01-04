@@ -16,7 +16,7 @@ $header_other='
 
   ';
 
-head("員工資料維護", $header_other);
+head("員工基本資料", $header_other);
 menu($username,$select='employee');
 ?>
     
