@@ -197,12 +197,10 @@ function pageBack(){
 
       }      
   
-    }
-  ?>
-
-
-    <p align=right>
-    <a href=employee.php?op=3><button type='button' class='btn btn-success'>新增</button></a>  </p>
+    }else{
+      echo '
+      <p align=right>
+    <a href=employee.php?op=3><button type="button" class="btn btn-success">新增</button></a>  </p>
     <table class="example">
   	<thead>
   		<tr>
@@ -221,37 +219,36 @@ function pageBack(){
   		</tr>
   	</thead>
   	<tbody>
-
-    <?php
+      ';
+      include("connectdb.php");
+      $sql = "SELECT empid,empname,jobtitle,deptid,city,address,phone,zipcode,monthsalary,annualleave FROM employee";
+  
+      $result =$connect->query($sql);
+  
+      /* fetch associative array */
+      while ($row = $result->fetch_assoc()) {
+          //printf("%s (%s)\n", $row["Name"], $row["CountryCode"]);
+          $empid=$row['empid'];
+          $empname=$row['empname'];
+          $jobtitle=$row['jobtitle'];
+          $deptid=$row['deptid'];
+          $city=$row['city'];
+          $address=$row['address'];
+          $phone=$row['phone'];
+          $zipcode=$row['zipcode'];
+          $monthsalary=$row['monthsalary'];
+          $annualleave=$row['annualleave'];
+  
+          echo "<tr><TD>$empid<td> $empname<TD>$jobtitle<td> $deptid<TD>$city<td> $address<TD>$phone<td> $zipcode<TD>$monthsalary<td> $annualleave";    
+          echo "<TD><a href=employee.php?op=1&empid=$empid><button type='button' class='btn btn-primary'>修改 <i class='bi bi-alarm'></i></button></a>";
+          echo "<TD><a href=\"javascript:if(confirm('確實要刪除[$empname]嗎?'))location='employee.php?empid=$empid&op=5'\"><button type='button' class='btn btn-danger'>刪除 <i class='bi bi-trash'></i></button>";
+      }    
+    }
+  ?>
 
 
     
-    include("connectdb.php");
-    $sql = "SELECT empid,empname,jobtitle,deptid,city,address,phone,zipcode,monthsalary,annualleave FROM employee";
 
-    $result =$connect->query($sql);
-
-    /* fetch associative array */
-    while ($row = $result->fetch_assoc()) {
-        //printf("%s (%s)\n", $row["Name"], $row["CountryCode"]);
-        $empid=$row['empid'];
-        $empname=$row['empname'];
-        $jobtitle=$row['jobtitle'];
-        $deptid=$row['deptid'];
-        $city=$row['city'];
-        $address=$row['address'];
-        $phone=$row['phone'];
-        $zipcode=$row['zipcode'];
-        $monthsalary=$row['monthsalary'];
-        $annualleave=$row['annualleave'];
-
-        echo "<tr><TD>$empid<td> $empname<TD>$jobtitle<td> $deptid<TD>$city<td> $address<TD>$phone<td> $zipcode<TD>$monthsalary<td> $annualleave";    
-        echo "<TD><a href=employee.php?op=1&empid=$empid><button type='button' class='btn btn-primary'>修改 <i class='bi bi-alarm'></i></button></a>";
-        echo "<TD><a href=\"javascript:if(confirm('確實要刪除[$empname]嗎?'))location='employee.php?empid=$empid&op=5'\"><button type='button' class='btn btn-danger'>刪除 <i class='bi bi-trash'></i></button>";
-    }    
-
-    
-    ?>
 
 
 </tbody>
