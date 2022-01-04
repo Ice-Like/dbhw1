@@ -16,7 +16,7 @@ $header_other='
 
   ';
 
-head("訂單資料維護", $header_other);
+head("訂單明細", $header_other);
 menu($username,$select='orderdetail');
 ?>
     <div class="container">
