@@ -16,7 +16,7 @@ $header_other='
 
   ';
 
-head("產品資料維護", $header_other);
+head("產品資料", $header_other);
 menu($username,$select='product');
 ?>
     <div class="container">
