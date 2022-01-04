@@ -16,7 +16,7 @@ $header_other='
 
   ';
 
-head("客戶資料維護", $header_other);
+head("客戶資料", $header_other);
 menu($username,$select='customer');
 ?>
     
