@@ -16,55 +16,55 @@ $header_other='
 
   ';
 
-head("部門資料", $header_other);
-menu($username,$select='dept');
+head("加班資料", $header_other);
+menu($username,$select='overtime');
 ?>
     <div class="container">
 
   <?php
   
-  function display_form($op,$deptid)
+  function display_form($op,$empid)
   {
 
     
       if ($op==3)
       {
-        $deptid="";
-        $deptname="";
-        $managername="";
+        $empid="";
+        $overdate="";
+        $overhours="";
         $op=4;
 
       }
       else
       {
               include("connectdb.php");
-              $sql = "SELECT deptid,deptname,managername FROM dept where deptid='$deptid'";
+              $sql = "SELECT empid,overdate,overhours FROM overtime where empid='$empid'";
 
               $result =$connect->query($sql);
 
               /* fetch associative array */
               if ($row = $result->fetch_assoc()) {
-                  $deptid=$row['deptid'];
-                  $deptname=$row['deptname'];
-                  $managername=$row['managername'];
+                  $empid=$row['empid'];
+                  $overdate=$row['overdate'];
+                  $overhours=$row['overhours'];
               }
                 $op=2;
       }
 
 
-      echo "<form action=dept.php method=post>";
+      echo "<form action=overtime.php method=post>";
       echo "<input type=hidden name=op value=$op>";
       echo "<div class='mb-3'>
-              <label for='exampleFormControlInput1' class='form-label'>部門代號</label>
-              <input type='text' class='form-control' name=deptid id='deptid' placeholder='請輸入部門代號' value=$deptid>
+              <label for='exampleFormControlInput1' class='form-label'>員工代號</label>
+              <input type='text' class='form-control' name=empid id='empid' placeholder='請輸入員工代號' value=$empid>
             </div>
             <div class='mb-3'>
-              <label for='exampleFormControlInput1' class='form-label'>部門名稱</label>
-              <input type='text' class='form-control' name=deptname id='deptname' placeholder='請輸入部門名稱' value=$deptname>
+              <label for='exampleFormControlInput1' class='form-label'>加班日期</label>
+              <input type='text' class='form-control' name=overdate id='overdate' placeholder='請輸入加班日期' value=$overdate>
             </div>
             <div class='mb-3'>
-              <label for='exampleFormControlInput1' class='form-label'>主管姓名</label>
-              <input type='text' class='form-control' name=managername id='managername' placeholder='請輸入主管姓名' value=$managername>
+              <label for='exampleFormControlInput1' class='form-label'>加班時數</label>
+              <input type='text' class='form-control' name=overhours id='overhours' placeholder='請輸入加班時數' value=$overhours>
             </div>";
       echo " <div class='col-auto'>
               <button type='submit' class='btn btn-primary mb-3'>儲存</button>           
@@ -75,7 +75,7 @@ menu($username,$select='dept');
   }
 
 function pageBack(){
-    echo "<script>window.location.href='dept.php';
+    echo "<script>window.location.href='overtime.php';
        </script>";
 }
 
@@ -87,43 +87,43 @@ function pageBack(){
       switch ($op)
       {
         case 1:  //修改
-              $deptid=$_REQUEST['deptid']; 
-               display_form($op,$deptid);
+              $empid=$_REQUEST['empid']; 
+               display_form($op,$empid);
               break;      
         case 2:  //修改資料
-                $deptid=$_REQUEST['deptid'];
-              $deptname=$_REQUEST['deptname'];
-              $managername=$_REQUEST['managername'];
+                $empid=$_REQUEST['empid'];
+              $overdate=$_REQUEST['overdate'];
+              $overhours=$_REQUEST['overhours'];
 
-                  $sql="update dept 
-                          set deptid='$deptid',
-                              deptname='$deptname',
-                              managername='$managername'
-                        where deptid='$deptid'";
+                  $sql="update overtime 
+                          set empid='$empid',
+                              overdate='$overdate',
+                              overhours='$overhours'
+                        where empid='$empid'";
                   include("connectdb.php");
                   #include('dbutil.php');
                   execute_sql($sql);
                   pageBack();
               break;
         case 3: //新增
-               $deptid="";
-                display_form($op,$deptid);
+               $empid="";
+                display_form($op,$empid);
               break;
         case 4: //新增資料
-              $deptid=$_REQUEST['deptid'];
-              $deptname=$_REQUEST['deptname'];
-              $managername=$_REQUEST['managername'];
+              $empid=$_REQUEST['empid'];
+              $overdate=$_REQUEST['overdate'];
+              $overhours=$_REQUEST['overhours'];
 
-              $sql="insert into dept (deptid,deptname,managername) values ('$deptid','$deptname','$managername')";
+              $sql="insert into overtime (empid,overdate,overhours) values ('$empid','$overdate','$overhours')";
               include("connectdb.php");
               #include('dbutil.php');
               execute_sql($sql);
               pageBack();
               break;      
         case 5: //刪除資料              
-              $deptid=$_REQUEST['deptid'];              
+              $empid=$_REQUEST['empid'];              
             
-              $sql="delete from dept where deptid='$deptid'";
+              $sql="delete from overtime where empid='$empid'";
               include("connectdb.php");
               #include('dbutil.php');
               execute_sql($sql);
@@ -135,13 +135,13 @@ function pageBack(){
     }else{
       echo '
       <p align=right>
-      <a href=dept.php?op=3><button type="button" class="btn btn-success">新增</button></a>  </p>
+      <a href=overtime.php?op=3><button type="button" class="btn btn-success">新增</button></a>  </p>
       <table class="example">
       <thead>
         <tr>
-          <td>部門代號</td>
-               <td>部門名稱</td>
-               <td>主管姓名</td>  
+          <td>員工代號</td>
+               <td>加班日期</td>
+               <td>加班時數</td>  
                <td> 編輯</td>			
                <td> 刪除</td>			
         </tr>
@@ -149,20 +149,20 @@ function pageBack(){
       <tbody>
       ';
       include("connectdb.php");
-      $sql = "SELECT deptid,deptname,managername FROM dept";
+      $sql = "SELECT empid,overdate,overhours FROM overtime";
   
       $result =$connect->query($sql);
   
       /* fetch associative array */
       while ($row = $result->fetch_assoc()) {
           //printf("%s (%s)\n", $row["Name"], $row["CountryCode"]);
-          $deptid=$row['deptid'];
-          $deptname=$row['deptname'];
-          $managername=$row['managername'];
+          $empid=$row['empid'];
+          $overdate=$row['overdate'];
+          $overhours=$row['overhours'];
   
-          echo "<tr><TD>$deptid<td> $deptname<TD>$managername";    
-          echo "<TD><a href=dept.php?op=1&deptid=$deptid><button type='button' class='btn btn-primary'>修改 <i class='bi bi-alarm'></i></button></a>";
-          echo "<TD><a href=\"javascript:if(confirm('確實要刪除[$deptname]嗎?'))location='dept.php?deptid=$deptid&op=5'\"><button type='button' class='btn btn-danger'>刪除 <i class='bi bi-trash'></i></button>";
+          echo "<tr><TD>$empid<td> $overdate<TD>$overhours";    
+          echo "<TD><a href=overtime.php?op=1&empid=$empid><button type='button' class='btn btn-primary'>修改 <i class='bi bi-alarm'></i></button></a>";
+          echo "<TD><a href=\"javascript:if(confirm('確實要刪除[$overdate]嗎?'))location='overtime.php?empid=$empid&op=5'\"><button type='button' class='btn btn-danger'>刪除 <i class='bi bi-trash'></i></button>";
       }    
     }
   ?>

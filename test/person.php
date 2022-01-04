@@ -206,63 +206,60 @@ function pageBack(){
 
       }      
   
+    }else{
+      echo '
+      <p align=right>
+      <a href=person.php?op=3><button type="button" class="btn btn-success">新增</button></a>  </p>
+      <table class="example">
+      <thead>
+        <tr>
+          <td>員工代號</td>
+               <td>年齡</td> 
+               <td>職稱</td>
+               <td>性別</td>  
+               <td>出生地</td>
+               <td>籍貫</td>  
+               <td>到職年</td>
+               <td>專長一</td>  
+               <td>專長二</td>
+               <td>第一外語</td>
+               <td>第二外語</td>    
+               <td> 編輯</td>			
+               <td> 刪除</td>			
+        </tr>
+      </thead>
+      <tbody>
+      ';
+      include("connectdb.php");
+      $sql = "SELECT empid,birth,jobtitle,gender,birthplace,nativeplace,workyear,expertise1,expertise2,ForeignLang1,ForeignLang2 FROM person";
+  
+      $result =$connect->query($sql);
+  
+      /* fetch associative array */
+      while ($row = $result->fetch_assoc()) {
+          //printf("%s (%s)\n", $row["Name"], $row["CountryCode"]);
+          $empid=$row['empid'];
+          $birth=$row['birth'];
+          $jobtitle=$row['jobtitle'];
+          $gender=$row['gender'];
+          $birthplace=$row['birthplace'];
+          $nativeplace=$row['nativeplace'];
+          $workyear=$row['workyear'];
+          $expertise1=$row['expertise1'];
+          $expertise2=$row['expertise2'];
+          $ForeignLang1=$row['ForeignLang1'];
+          $ForeignLang2=$row['ForeignLang2'];
+  
+          echo "<tr><TD>$empid<td> $birth<TD>$jobtitle<td> $gender<TD>$birthplace<td> $nativeplace<TD>$workyear<td> $expertise1<TD>$expertise2<td> $ForeignLang1<TD> $ForeignLang2";    
+          echo "<TD><a href=person.php?op=1&empid=$empid><button type='button' class='btn btn-primary'>修改 <i class='bi bi-alarm'></i></button></a>";
+          echo "<TD><a href=\"javascript:if(confirm('確實要刪除[$jobtitle]嗎?'))location='person.php?empid=$empid&op=5'\"><button type='button' class='btn btn-danger'>刪除 <i class='bi bi-trash'></i></button>";
+      }
     }
   ?>
 
 
-    <p align=right>
-    <a href=person.php?op=3><button type='button' class='btn btn-success'>新增</button></a>  </p>
-    <table class="example">
-  	<thead>
-  		<tr>
-  			<td>員工代號</td>
-             <td>年齡</td> 
-             <td>職稱</td>
-             <td>性別</td>  
-             <td>出生地</td>
-             <td>籍貫</td>  
-             <td>到職年</td>
-             <td>專長一</td>  
-             <td>專長二</td>
-             <td>第一外語</td>
-             <td>第二外語</td>    
-             <td> 編輯</td>			
-             <td> 刪除</td>			
-  		</tr>
-  	</thead>
-  	<tbody>
-
-    <?php
 
 
-    
-    include("connectdb.php");
-    $sql = "SELECT empid,birth,jobtitle,gender,birthplace,nativeplace,workyear,expertise1,expertise2,ForeignLang1,ForeignLang2 FROM person";
-
-    $result =$connect->query($sql);
-
-    /* fetch associative array */
-    while ($row = $result->fetch_assoc()) {
-        //printf("%s (%s)\n", $row["Name"], $row["CountryCode"]);
-        $empid=$row['empid'];
-        $birth=$row['birth'];
-        $jobtitle=$row['jobtitle'];
-        $gender=$row['gender'];
-        $birthplace=$row['birthplace'];
-        $nativeplace=$row['nativeplace'];
-        $workyear=$row['workyear'];
-        $expertise1=$row['expertise1'];
-        $expertise2=$row['expertise2'];
-        $ForeignLang1=$row['ForeignLang1'];
-        $ForeignLang2=$row['ForeignLang2'];
-
-        echo "<tr><TD>$empid<td> $birth<TD>$jobtitle<td> $gender<TD>$birthplace<td> $nativeplace<TD>$workyear<td> $expertise1<TD>$expertise2<td> $ForeignLang1<TD> $ForeignLang2";    
-        echo "<TD><a href=person.php?op=1&empid=$empid><button type='button' class='btn btn-primary'>修改 <i class='bi bi-alarm'></i></button></a>";
-        echo "<TD><a href=\"javascript:if(confirm('確實要刪除[$jobtitle]嗎?'))location='person.php?empid=$empid&op=5'\"><button type='button' class='btn btn-danger'>刪除 <i class='bi bi-trash'></i></button>";
-    }    
-
-    
-    ?>
 
 
 </tbody>

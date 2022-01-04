@@ -16,9 +16,10 @@ $header_other='
 
   ';
 
-head("訂單明細", $header_other);
-menu($username,$select='orderdetail');
+head("產品訂購明細", $header_other);
+menu($username,$select='purchasedetail');
 ?>
+    
     <div class="container">
 
   <?php
@@ -30,55 +31,55 @@ menu($username,$select='orderdetail');
       if ($op==3)
       {
         $seq="";
+        $purchaseid="";
         $prodid="";
-        $orderid="";
         $qty="";
-        $discount="";
+        $purchaseprice="";
         $op=4;
 
       }
       else
       {
               include("connectdb.php");
-              $sql = "SELECT seq,prodid,orderid,qty,discount FROM orderdetail where seq='$seq'";
+              $sql = "SELECT seq,purchaseid,prodid,qty,purchaseprice FROM purchasedetail where seq='$seq'";
 
               $result =$connect->query($sql);
 
               /* fetch associative array */
               if ($row = $result->fetch_assoc()) {
                   $seq=$row['seq'];
+                  $purchaseid=$row['purchaseid'];
                   $prodid=$row['prodid'];
-                  $orderid=$row['orderid'];
                   $qty=$row['qty'];
-                  $discount=$row['discount'];
+                  $purchaseprice=$row['purchaseprice'];
               }
                 $op=2;
       }
 
 
-      echo "<form action=orderdetail.php method=post>";
+      echo "<form action=purchasedetail.php method=post>";
       echo "<input type=hidden name=op value=$op>";
-      echo "
-            <div class='mb-3'>
+      echo "<div class='mb-3'>
               <label for='exampleFormControlInput1' class='form-label'>序號</label>
               <input type='text' class='form-control' name=seq id='seq' placeholder='請輸入序號' value=$seq>
+            </div>
+            <div class='mb-3'>
+              <label for='exampleFormControlInput1' class='form-label'>採購代號</label>
+              <input type='text' class='form-control' name=purchaseid id='purchaseid' placeholder='請輸入採購代號' value=$purchaseid>
             </div>
             <div class='mb-3'>
               <label for='exampleFormControlInput1' class='form-label'>產品代號</label>
               <input type='text' class='form-control' name=prodid id='prodid' placeholder='請輸入產品代號' value=$prodid>
             </div>
             <div class='mb-3'>
-              <label for='exampleFormControlInput1' class='form-label'>訂單編號</label>
-              <input type='text' class='form-control' name=orderid id='orderid' placeholder='請輸入訂單編號' value=$orderid>
-            </div>
-            <div class='mb-3'>
               <label for='exampleFormControlInput1' class='form-label'>數量</label>
               <input type='text' class='form-control' name=qty id='qty' placeholder='請輸入數量' value=$qty>
             </div>
             <div class='mb-3'>
-              <label for='exampleFormControlInput1' class='form-label'>折扣</label>
-              <input type='text' class='form-control' name=discount id='discount' placeholder='請輸入折扣' value=$discount>
-            </div>";
+              <label for='exampleFormControlInput1' class='form-label'>採購單價</label>
+              <input type='text' class='form-control' name=purchaseprice id='purchaseprice' placeholder='請輸入採購單價' value=$purchaseprice>
+            </div>
+            ";
       echo " <div class='col-auto'>
               <button type='submit' class='btn btn-primary mb-3'>儲存</button>           
               <button type='reset' class='btn btn-primary mb-3'>重新輸入</button>                            
@@ -88,7 +89,7 @@ menu($username,$select='orderdetail');
   }
 
 function pageBack(){
-    echo "<script>window.location.href='orderdetail.php';
+    echo "<script>window.location.href='purchasedetail.php';
        </script>";
 }
 
@@ -104,17 +105,18 @@ function pageBack(){
                display_form($op,$seq);
               break;      
         case 2:  //修改資料
-              $seq=$_REQUEST['seq']; 
-              $prodid=$_REQUEST['prodid'];
-              $orderid=$_REQUEST['orderid'];
-              $qty=$_REQUEST['qty'];
-              $discount=$_REQUEST['discount'];
-                  $sql="update orderdetail 
+                  $seq=$_REQUEST['seq'];
+                  $purchaseid=$_REQUEST['purchaseid'];
+                  $prodid=$_REQUEST['prodid'];
+                  $qty=$_REQUEST['qty'];
+                  $purchaseprice=$_REQUEST['purchaseprice'];
+
+                  $sql="update purchasedetail
                           set seq='$seq',
-                              rodid='$prodid',
-                              orderid='$orderid',
+                              purchaseid='$purchaseid',
+                              prodid='$prodid',
                               qty='$qty',
-                              discount='$discount'
+                              purchaseprice='$purchaseprice'
                         where seq='$seq'";
                   include("connectdb.php");
                   #include('dbutil.php');
@@ -126,13 +128,13 @@ function pageBack(){
                 display_form($op,$seq);
               break;
         case 4: //新增資料
-              $seq=$_REQUEST['seq']; 
+              $seq=$_REQUEST['seq'];
+              $purchaseid=$_REQUEST['purchaseid'];
               $prodid=$_REQUEST['prodid'];
-              $orderid=$_REQUEST['orderid'];
               $qty=$_REQUEST['qty'];
-              $discount=$_REQUEST['discount'];
+              $purchaseprice=$_REQUEST['purchaseprice'];
 
-              $sql="insert into orderdetail (seq,prodid,orderid,qty,discount) values ('$seq','$prodid','$orderid','$qty','$discount')";
+              $sql="insert into purchasedetail (seq,purchaseid,prodid,qty,purchaseprice) values ('$seq','$purchaseid','$prodid','$qty','$purchaseprice')";
               include("connectdb.php");
               #include('dbutil.php');
               execute_sql($sql);
@@ -141,7 +143,7 @@ function pageBack(){
         case 5: //刪除資料              
               $seq=$_REQUEST['seq'];              
             
-              $sql="delete from orderdetail where seq='$seq'";
+              $sql="delete from purchasedetail where seq='$seq'";
               include("connectdb.php");
               #include('dbutil.php');
               execute_sql($sql);
@@ -153,23 +155,23 @@ function pageBack(){
     }else{
       echo '
       <p align=right>
-    <a href=orderdetail.php?op=3><button type="button" class="btn btn-success">新增</button></a>  </p>
-    <table class="example">
-  	<thead>
-  		<tr>
-        <td>序號</td>
-  			<td>產品代號</td>
-        <td>訂單編號</td>
-        <td>數量</td>  
-        <td>折扣</td>  
-        <td> 編輯</td>			
-        <td> 刪除</td>			
-  		</tr>
-  	</thead>
-  	<tbody>
+      <a href=purchasedetail.php?op=3><button type="button" class="btn btn-success">新增</button></a>  </p>
+      <table class="example">
+      <thead>
+        <tr>
+          <td>序號</td>
+          <td>採購代號</td> 
+          <td>產品代號</td>
+          <td>數量</td>  
+          <td>採購單價</td>
+          <td> 編輯</td>			 
+          <td> 刪除</td>			
+        </tr>
+      </thead>
+      <tbody>
       ';
       include("connectdb.php");
-      $sql = "SELECT seq,prodid,orderid,qty,discount FROM orderdetail";
+      $sql = "SELECT seq,purchaseid,prodid,qty,purchaseprice FROM purchasedetail";
   
       $result =$connect->query($sql);
   
@@ -177,20 +179,17 @@ function pageBack(){
       while ($row = $result->fetch_assoc()) {
           //printf("%s (%s)\n", $row["Name"], $row["CountryCode"]);
           $seq=$row['seq'];
+          $purchaseid=$row['purchaseid'];
           $prodid=$row['prodid'];
-          $orderid=$row['orderid'];
           $qty=$row['qty'];
-          $discount=$row['discount'];
+          $purchaseprice=$row['purchaseprice'];
   
-          echo "<tr><td>$seq<TD>$prodid<td> $orderid<TD>$qty<td>$discount";    
-          echo "<TD><a href=orderdetail.php?op=1&seq=$seq><button type='button' class='btn btn-primary'>修改 <i class='bi bi-alarm'></i></button></a>";
-          echo "<TD><a href=\"javascript:if(confirm('確實要刪除[$seq]嗎?'))location='orderdetail.php?seq=$seq&op=5'\"><button type='button' class='btn btn-danger'>刪除 <i class='bi bi-trash'></i></button>";
+          echo "<tr><TD>$seq<td> $purchaseid<TD>$prodid<td> $qty<TD>$purchaseprice";    
+          echo "<TD><a href=purchasedetail.php?op=1&seq=$seq><button type='button' class='btn btn-primary'>修改 <i class='bi bi-alarm'></i></button></a>";
+          echo "<TD><a href=\"javascript:if(confirm('確實要刪除[$seq]嗎?'))location='purchasedetail.php?seq=$seq&op=5'\"><button type='button' class='btn btn-danger'>刪除 <i class='bi bi-trash'></i></button>";
       }    
     }
   ?>
-
-
-    
 
 
 

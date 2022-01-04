@@ -7,6 +7,7 @@ $dbname="heroku_4e04d0ad1fcd13d";
 
 
 $connect = mysqli_connect ( $host , $user ,$passwd , $dbname );
+
 //檢查連接
 if (! $connect )
 {

@@ -16,8 +16,8 @@ $header_other='
 
   ';
 
-head("產品資料", $header_other);
-menu($username,$select='product');
+head("產品存量", $header_other);
+menu($username,$select='inv');
 ?>
     <div class="container">
 
@@ -30,47 +30,41 @@ menu($username,$select='product');
       if ($op==3)
       {
         $prodid="";
-        $prodname="";
-        $unitprice="";
-        $cost="";
+        $stock="";
+        $safestock="";
         $op=4;
 
       }
       else
       {
               include("connectdb.php");
-              $sql = "SELECT prodid,prodname,unitprice,cost FROM product where prodid='$prodid'";
+              $sql = "SELECT prodid,stock,safestock FROM inv where prodid='$prodid'";
 
               $result =$connect->query($sql);
 
               /* fetch associative array */
               if ($row = $result->fetch_assoc()) {
                   $prodid=$row['prodid'];
-                  $prodname=$row['prodname'];
-                  $unitprice=$row['unitprice'];
-                  $cost=$row['cost'];
+                  $stock=$row['stock'];
+                  $safestock=$row['safestock'];
               }
                 $op=2;
       }
 
 
-      echo "<form action=product.php method=post>";
+      echo "<form action=inv.php method=post>";
       echo "<input type=hidden name=op value=$op>";
       echo "<div class='mb-3'>
               <label for='exampleFormControlInput1' class='form-label'>產品代號</label>
               <input type='text' class='form-control' name=prodid id='prodid' placeholder='請輸入產品代號' value=$prodid>
             </div>
             <div class='mb-3'>
-              <label for='exampleFormControlInput1' class='form-label'>產品名稱</label>
-              <input type='text' class='form-control' name=prodname id='prodname' placeholder='請輸入產品名稱' value=$prodname>
+              <label for='exampleFormControlInput1' class='form-label'>現存量</label>
+              <input type='text' class='form-control' name=stock id='stock' placeholder='請輸入現存量' value=$stock>
             </div>
             <div class='mb-3'>
-              <label for='exampleFormControlInput1' class='form-label'>單價</label>
-              <input type='text' class='form-control' name=unitprice id='unitprice' placeholder='請輸入單價' value=$unitprice>
-            </div>
-            <div class='mb-3'>
-              <label for='exampleFormControlInput1' class='form-label'>成本</label>
-              <input type='text' class='form-control' name=cost id='cost' placeholder='請輸入成本' value=$cost>
+              <label for='exampleFormControlInput1' class='form-label'>安全存量</label>
+              <input type='text' class='form-control' name=safestock id='safestock' placeholder='請輸入安全存量' value=$safestock>
             </div>";
       echo " <div class='col-auto'>
               <button type='submit' class='btn btn-primary mb-3'>儲存</button>           
@@ -81,7 +75,7 @@ menu($username,$select='product');
   }
 
 function pageBack(){
-    echo "<script>window.location.href='product.php';
+    echo "<script>window.location.href='inv.php';
        </script>";
 }
 
@@ -98,14 +92,13 @@ function pageBack(){
               break;      
         case 2:  //修改資料
                 $prodid=$_REQUEST['prodid'];
-              $prodname=$_REQUEST['prodname'];
-              $unitprice=$_REQUEST['unitprice'];
-              $cost=$_REQUEST['cost'];
-                  $sql="update product 
+              $stock=$_REQUEST['stock'];
+              $safestock=$_REQUEST['safestock'];
+
+                  $sql="update inv 
                           set prodid='$prodid',
-                              prodname='$prodname',
-                              unitprice='$unitprice',
-                              cost='$cost'
+                              stock='$stock',
+                              safestock='$safestock'
                         where prodid='$prodid'";
                   include("connectdb.php");
                   #include('dbutil.php');
@@ -118,11 +111,10 @@ function pageBack(){
               break;
         case 4: //新增資料
               $prodid=$_REQUEST['prodid'];
-              $prodname=$_REQUEST['prodname'];
-              $unitprice=$_REQUEST['unitprice'];
-              $cost=$_REQUEST['cost'];
+              $stock=$_REQUEST['stock'];
+              $safestock=$_REQUEST['safestock'];
 
-              $sql="insert into product (prodid,prodname,unitprice,cost) values ('$prodid','$prodname','$unitprice','$cost')";
+              $sql="insert into inv (prodid,stock,safestock) values ('$prodid','$stock','$safestock')";
               include("connectdb.php");
               #include('dbutil.php');
               execute_sql($sql);
@@ -131,7 +123,7 @@ function pageBack(){
         case 5: //刪除資料              
               $prodid=$_REQUEST['prodid'];              
             
-              $sql="delete from product where prodid='$prodid'";
+              $sql="delete from inv where prodid='$prodid'";
               include("connectdb.php");
               #include('dbutil.php');
               execute_sql($sql);
@@ -143,14 +135,13 @@ function pageBack(){
     }else{
       echo '
       <p align=right>
-      <a href=product.php?op=3><button type="button" class="btn btn-success">新增</button></a>  </p>
+      <a href=inv.php?op=3><button type="button" class="btn btn-success">新增</button></a>  </p>
       <table class="example">
       <thead>
         <tr>
           <td>產品代號</td>
-               <td>產品名稱</td>
-               <td>單價</td>  
-               <td>成本</td>  
+               <td>現存量</td>
+               <td>安全存量</td>  
                <td> 編輯</td>			
                <td> 刪除</td>			
         </tr>
@@ -158,7 +149,7 @@ function pageBack(){
       <tbody>
       ';
       include("connectdb.php");
-      $sql = "SELECT prodid,prodname,unitprice,cost FROM product";
+      $sql = "SELECT prodid,stock,safestock FROM inv";
   
       $result =$connect->query($sql);
   
@@ -166,17 +157,15 @@ function pageBack(){
       while ($row = $result->fetch_assoc()) {
           //printf("%s (%s)\n", $row["Name"], $row["CountryCode"]);
           $prodid=$row['prodid'];
-          $prodname=$row['prodname'];
-          $unitprice=$row['unitprice'];
-          $cost=$row['cost'];
+          $stock=$row['stock'];
+          $safestock=$row['safestock'];
   
-          echo "<tr><TD>$prodid<td> $prodname<TD>$unitprice<td>$cost";    
-          echo "<TD><a href=product.php?op=1&prodid=$prodid><button type='button' class='btn btn-primary'>修改 <i class='bi bi-alarm'></i></button></a>";
-          echo "<TD><a href=\"javascript:if(confirm('確實要刪除[$prodname]嗎?'))location='product.php?prodid=$prodid&op=5'\"><button type='button' class='btn btn-danger'>刪除 <i class='bi bi-trash'></i></button>";
-      }   
+          echo "<tr><TD>$prodid<td> $stock<TD>$safestock";    
+          echo "<TD><a href=inv.php?op=1&prodid=$prodid><button type='button' class='btn btn-primary'>修改 <i class='bi bi-alarm'></i></button></a>";
+          echo "<TD><a href=\"javascript:if(confirm('確實要刪除[$prodid]嗎?'))location='inv.php?prodid=$prodid&op=5'\"><button type='button' class='btn btn-danger'>刪除 <i class='bi bi-trash'></i></button>";
+      }    
     }
   ?>
-
 
 
 

@@ -242,7 +242,7 @@ function pageBack(){
           echo "<tr><TD>$empid<td> $empname<TD>$jobtitle<td> $deptid<TD>$city<td> $address<TD>$phone<td> $zipcode<TD>$monthsalary<td> $annualleave";    
           echo "<TD><a href=employee.php?op=1&empid=$empid><button type='button' class='btn btn-primary'>修改 <i class='bi bi-alarm'></i></button></a>";
           echo "<TD><a href=\"javascript:if(confirm('確實要刪除[$empname]嗎?'))location='employee.php?empid=$empid&op=5'\"><button type='button' class='btn btn-danger'>刪除 <i class='bi bi-trash'></i></button>";
-      }    
+      }     
     }
   ?>
 
