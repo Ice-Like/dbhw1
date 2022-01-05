@@ -18,11 +18,7 @@ $header_other='
 
 head("客戶資料", $header_other);
 menu($username,$select='customer');
-?>
-    
-    <div class="container">
 
-  <?php
   
   function display_form($op,$custid)
   {

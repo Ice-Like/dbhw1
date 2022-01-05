@@ -18,12 +18,7 @@ $header_other='
 
 head("銷售訂單", $header_other);
 menu($username,$select='salesorder');
-?>
-    
-    <div class="container">
 
-  <?php
-  
   function display_form($op,$seq)
   {
 

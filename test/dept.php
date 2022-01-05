@@ -18,10 +18,7 @@ $header_other='
 
 head("部門資料", $header_other);
 menu($username,$select='dept');
-?>
-    <div class="container">
 
-  <?php
   
   function display_form($op,$deptid)
   {

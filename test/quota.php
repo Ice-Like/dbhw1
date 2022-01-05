@@ -18,10 +18,7 @@ $header_other='
 
 head("業績目標", $header_other);
 menu($username,$select='quota');
-?>
-    <div class="container">
 
-  <?php
   
   function display_form($op,$empid)
   {

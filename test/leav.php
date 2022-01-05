@@ -18,11 +18,7 @@ $header_other='
 
 head("請假資料", $header_other);
 menu($username,$select='leav');
-?>
-    
-    <div class="container">
 
-  <?php
   
   function display_form($op,$empid)
   {

@@ -18,11 +18,7 @@ $header_other='
 
 head("產品訂購明細", $header_other);
 menu($username,$select='purchasedetail');
-?>
-    
-    <div class="container">
 
-  <?php
   
   function display_form($op,$seq)
   {

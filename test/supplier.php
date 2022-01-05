@@ -18,11 +18,7 @@ $header_other='
 
 head("供應商資料", $header_other);
 menu($username,$select='supplier');
-?>
-    
-    <div class="container">
 
-  <?php
   
   function display_form($op,$supplierid)
   {

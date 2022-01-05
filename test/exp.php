@@ -18,11 +18,7 @@ $header_other='
 
 head("員工工作經驗", $header_other);
 menu($username,$select='exp');
-?>
-    
-    <div class="container">
 
-  <?php
   
   function display_form($op,$empid)
   {

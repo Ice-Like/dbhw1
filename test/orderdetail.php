@@ -18,11 +18,7 @@ $header_other='
 
 head("訂單明細", $header_other);
 menu($username,$select='orderdetail');
-?>
-    <div class="container">
 
-  <?php
-  
   function display_form($op,$seq)
   {
 

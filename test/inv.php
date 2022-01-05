@@ -18,10 +18,7 @@ $header_other='
 
 head("產品存量", $header_other);
 menu($username,$select='inv');
-?>
-    <div class="container">
 
-  <?php
   
   function display_form($op,$prodid)
   {

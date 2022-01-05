@@ -18,11 +18,7 @@ $header_other='
 
 head("員工基本資料", $header_other);
 menu($username,$select='employee');
-?>
-    
-    <div class="container">
 
-  <?php
   
   function display_form($op,$empid)
   {
