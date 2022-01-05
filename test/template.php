@@ -338,8 +338,8 @@ echo '
         </div>
       </div>
     
-      <div class="b-example-divider"></div>
-    ';
+      <div class="b-example-divider"></div>'.(
+      ($select=='home') ? '' : '<div class="container" style="overflow:auto;">');
 }
 
 
