@@ -2,10 +2,8 @@
 include("auth.php");
 include("template.php");
 
-$header_other='
-';
 
-head("進銷存系統",$header_other);
+head("進銷存系統",'home');
 menu($username);
 content();
 
